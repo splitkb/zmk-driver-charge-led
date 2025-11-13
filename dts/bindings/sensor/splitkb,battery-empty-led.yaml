@@ -1,0 +1,11 @@
+# Copyright (c) 2026 splitkb.com
+# SPDX-License-Identifier: MIT
+
+description: Battery empty LED control
+
+compatible: "splitkb,battery-empty-led"
+
+properties:
+  led:
+    type: phandle
+    required: true

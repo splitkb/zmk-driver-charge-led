@@ -1,11 +1,34 @@
-# ZMK Module Template
+# Splitkb.com ZMK charge LED driver
 
-This repository contains a template for a ZMK module, as it would most frequently be used. 
+This driver adds support for a charging LED. 
 
-## Usage
+## Battery empty LED
 
-Read through the [ZMK Module Creation](https://zmk.dev/docs/development/module-creation) page for details on how to configure this template.
+Blinks the specified LED 20 times in short bursts when the battery percentage is 20% or lower.
 
-## More Info
+Devicetree example:
+```
+/ {
+    battery_empty_led: battery_empty_led {
+        compatible = "splitkb,battery-empty-led";
+        status = "okay";
+        led = <&orange_led>; 
+    };
+};
+```
 
-For more info on modules, you can read through  through the [Zephyr modules page](https://docs.zephyrproject.org/3.5.0/develop/modules.html) and [ZMK's page on using modules](https://zmk.dev/docs/features/modules). [Zephyr's west manifest page](https://docs.zephyrproject.org/3.5.0/develop/west/manifest.html#west-manifests) may also be of use.
+## Charging IC LED
+
+Sets the specified LED to `ON` when a charger is connected. This is done by reading the STAT pin from a BQ25170 charging IC.
+
+Devicetree example:
+```
+/ {
+    charging_led_controller {
+        compatible = "splitkb,charging-ic-led";
+        status = "okay";
+        stat-gpios = <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        led = <&orange_led>; 
+    };
+};
+```
